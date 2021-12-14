@@ -18,6 +18,7 @@ runs:
   steps:
     - run: |
         ls
+        git --version
         mkdir git
         REPO="https://${{ inputs.token }}@github.com/${GITHUB_REPOSITORY}.git"
         git clone --filter=blob:none --no-checkout --sparse $REPO git
