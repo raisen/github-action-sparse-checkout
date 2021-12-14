@@ -1,0 +1,31 @@
+name: 'git spare checkout'
+description: 'git sparse checkout'
+author: 'raisen'
+
+inputs:
+  files:
+    description: 'Files to checkout from the repo'
+    required: true
+  token:
+    description: 'A Github Private Access Token'
+    required: true
+  branch:
+    description: 'Branch to checkout files from'
+    required: false
+    default: master
+runs:
+  using: "composite"
+  steps:
+    - run: |
+        mkdir git
+        REPO="https://${{ secrets.GITHUB_TOKEN }}@github.com/${GITHUB_REPOSITORY}.git"
+        git clone --filter=blob:none --no-checkout --depth 1  --sparse $REPO git
+        cd git
+        git sparse-checkout init --cone
+        git sparse-checkout add ${{ inputs.files }}
+        git checkout ${{ inputs.branch }}
+        shopt -s dotglob
+        mv * ..
+        cd ..
+        rm -rf git
+      shell: bash
