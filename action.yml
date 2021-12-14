@@ -20,7 +20,7 @@ runs:
         ls
         mkdir git
         REPO="https://${{ inputs.token }}@github.com/${GITHUB_REPOSITORY}.git"
-        git clone --filter=blob:none --no-checkout --depth 1  --sparse $REPO git
+        git clone --filter=blob:none --no-checkout --sparse $REPO git
         cd git
         git sparse-checkout init --cone
         git sparse-checkout add ${{ inputs.files }}
