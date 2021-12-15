@@ -13,6 +13,9 @@ inputs:
     description: 'Branch to checkout files from'
     required: false
     default: master
+  user:
+    description: 'username who owns the personal access token'
+    required: true
 runs:
   using: "composite"
   steps:
@@ -20,7 +23,7 @@ runs:
         echo ${{ inputs.token }}
         echo ${GITHUB_REPOSITORY}
         mkdir git
-        REPO="https://raisen:${{ inputs.token }}@github.com/${GITHUB_REPOSITORY}.git"
+        REPO="https://${{ inputs.user }}:${{ inputs.token }}@github.com/${GITHUB_REPOSITORY}.git"
         git clone --filter=blob:none --no-checkout --sparse $REPO git
         cd git
         git sparse-checkout init --cone
