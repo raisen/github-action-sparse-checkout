@@ -31,7 +31,6 @@ runs:
           fname=$(echo "$line" | xargs echo -n)
           git sparse-checkout add "$fname"
         done <<< "${{ inputs.files }}"
-        git sparse-checkout add ${{ inputs.files }}
         git checkout ${{ inputs.branch }}
         shopt -s dotglob
         mv * ..
