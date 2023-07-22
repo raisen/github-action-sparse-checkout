@@ -27,6 +27,9 @@ runs:
         git clone --filter=blob:none --no-checkout --sparse $REPO git
         cd git
         git sparse-checkout init --cone
+        while IFS= read -r line; do
+          git sparse-checkout add "$line"
+        done <<< "${{ inputs.files }}"
         git sparse-checkout add ${{ inputs.files }}
         git checkout ${{ inputs.branch }}
         shopt -s dotglob
