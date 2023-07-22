@@ -28,7 +28,8 @@ runs:
         cd git
         git sparse-checkout init --cone
         while IFS= read -r line; do
-          git sparse-checkout add "$line"
+          fname=$(echo "$line" | xargs echo -n)
+          git sparse-checkout add "$fname"
         done <<< "${{ inputs.files }}"
         git sparse-checkout add ${{ inputs.files }}
         git checkout ${{ inputs.branch }}
